@@ -15,9 +15,7 @@ import numpy as np
 
 from .preprocessing import IMG_SIZE, NUM_CLASSES, CLASS_NAMES
 
-# ---------------------------------------------------------------------------
 # Paths 
-# ---------------------------------------------------------------------------
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(_HERE)
@@ -27,11 +25,7 @@ METADATA_PATH = os.path.join(MODELS_DIR, "model_metadata.json")
 
 os.makedirs(MODELS_DIR, exist_ok=True)
 
-
-# ---------------------------------------------------------------------------
 # Model building
-# ---------------------------------------------------------------------------
-
 def build_model(img_size: int = IMG_SIZE, num_classes: int = NUM_CLASSES,
                 backbone: str = "mobilenetv2", dropout: float = 0.3,
                 trainable_base: bool = False):
@@ -100,10 +94,7 @@ def set_backbone_trainable(model, trainable: bool, unfreeze_from: int = -40):
                 layer.trainable = False
     return model
 
-
-# ---------------------------------------------------------------------------
 # Class weights
-# ---------------------------------------------------------------------------
 
 def compute_class_weights(labels: np.ndarray, num_classes: int = NUM_CLASSES) -> Dict[int, float]:
     """Inverse-frequency class weights, normalized to mean 1.0."""
@@ -121,9 +112,7 @@ def labels_from_dataset(ds) -> np.ndarray:
     return np.concatenate(out).ravel() if out else np.empty((0,), dtype=np.int64)
 
 
-# ---------------------------------------------------------------------------
 # Callbacks
-# ---------------------------------------------------------------------------
 
 def default_callbacks(checkpoint_path: Optional[str] = None, patience: int = 5, monitor: str = "val_loss"):
     import tensorflow as tf
@@ -136,9 +125,7 @@ def default_callbacks(checkpoint_path: Optional[str] = None, patience: int = 5, 
     return cbs
 
 
-# ---------------------------------------------------------------------------
 # Training
-# ---------------------------------------------------------------------------
 
 def train_model(train_ds, val_ds, backbone: str = "mobilenetv2",
                 stage1_epochs: int = 8, stage2_epochs: int = 12,
@@ -167,9 +154,7 @@ def train_model(train_ds, val_ds, backbone: str = "mobilenetv2",
     return model, history
 
 
-# ---------------------------------------------------------------------------
 # Evaluation
-# ---------------------------------------------------------------------------
 
 def evaluate_model(model, test_ds, class_names: List[str] = None) -> Dict:
     """Evaluate model: accuracy, per-class metrics, confusion matrix, ROC-AUC."""
@@ -239,9 +224,7 @@ def print_evaluation(results: Dict) -> None:
     print(results["classification_report"])
 
 
-# ---------------------------------------------------------------------------
 # Persistence + versioning
-# ---------------------------------------------------------------------------
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -303,9 +286,7 @@ def save_metadata(meta: Dict, path: str = METADATA_PATH) -> None:
         json.dump(meta, f, indent=2)
 
 
-# ---------------------------------------------------------------------------
 # Light retraining
-# ---------------------------------------------------------------------------
 
 def light_retrain(X_new: np.ndarray, y_new: np.ndarray,
                   base_model_path: str = PROD_MODEL_PATH,
@@ -352,9 +333,7 @@ def should_promote(new_metrics: Dict, current_metrics: Optional[Dict], threshold
     return False, f"Rejected: macro F1 {new_f1:.4f} did not beat incumbent {old_f1:.4f} (delta {delta:+.4f})."
 
 
-# ---------------------------------------------------------------------------
-# chekpoint
-# ---------------------------------------------------------------------------
+# model checkpoint
 
 if __name__ == "__main__":
     print("Model module self-check")
