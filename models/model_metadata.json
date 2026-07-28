@@ -1,0 +1,83 @@
+{
+  "version": "v1",
+  "model_path": "c:\\Users\\speci\\practice\\classification_model_mlop\\models\\corn_disease_model.keras",
+  "saved_at": "2026-07-26T20:13:28.333049+00:00",
+  "img_size": 224,
+  "num_classes": 4,
+  "class_names": [
+    "Gray_Leaf_Spot",
+    "Common_Rust",
+    "Healthy",
+    "Northern_Leaf_Blight"
+  ],
+  "notes": "Initial production model. MobileNetV2, two-stage fine-tuning, class-weighted, 224x224, trained on PlantVillage corn subset.",
+  "metrics": {
+    "accuracy": 0.9380952380952381,
+    "macro_precision": 0.9234496518967081,
+    "macro_recall": 0.9156156654497178,
+    "macro_f1": 0.9191657630755711,
+    "weighted_precision": 0.936958873762427,
+    "weighted_recall": 0.9380952380952381,
+    "weighted_f1": 0.9373050443217792,
+    "roc_auc_ovr_macro": 0.9899324605789317,
+    "per_class": {
+      "Gray_Leaf_Spot": {
+        "precision": 0.839622641509434,
+        "recall": 0.7739130434782608,
+        "f1": 0.8054298642533937,
+        "support": 115
+      },
+      "Common_Rust": {
+        "precision": 0.9700374531835206,
+        "recall": 0.9885496183206107,
+        "f1": 0.9792060491493384,
+        "support": 262
+      },
+      "Healthy": {
+        "precision": 0.9957264957264957,
+        "recall": 1.0,
+        "f1": 0.9978586723768736,
+        "support": 233
+      },
+      "Northern_Leaf_Blight": {
+        "precision": 0.8884120171673819,
+        "recall": 0.9,
+        "f1": 0.8941684665226782,
+        "support": 230
+      }
+    },
+    "confusion_matrix": [
+      [
+        89,
+        2,
+        0,
+        24
+      ],
+      [
+        1,
+        259,
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        233,
+        0
+      ],
+      [
+        16,
+        6,
+        1,
+        207
+      ]
+    ],
+    "class_names": [
+      "Gray_Leaf_Spot",
+      "Common_Rust",
+      "Healthy",
+      "Northern_Leaf_Blight"
+    ],
+    "n_test_samples": 840
+  }
+}
