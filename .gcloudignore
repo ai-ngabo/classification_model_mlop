@@ -1,0 +1,9 @@
+data/train/
+data/test/
+data/retrain/
+notebook/
+locust/
+__pycache__/
+*.pyc
+.git/
+results_*

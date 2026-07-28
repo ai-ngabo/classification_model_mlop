@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Data — too large / regenerable from the notebook
+data/train/
+data/test/
+data/retrain/
+data/plant_village/
+
+# Redundant training artifacts 
+models/corn_checkpoint.keras
+models/baseline_cnn.keras
+
+# Locust raw outputs 
+results_*.csv
+
+# OS / editor
+.DS_Store
+.vscode/

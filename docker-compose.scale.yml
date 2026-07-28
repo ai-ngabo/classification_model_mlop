@@ -1,0 +1,25 @@
+# Load-balanced setup for the Locust multi-container experiment.
+# Point Locust at the load balancer:  http://localhost:8080
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    image: corn-api:latest
+    environment:
+      - PORT=8000
+      - RETRAIN_THRESHOLD=50
+    expose:
+      - "8000"
+    volumes:
+      - ./models:/app/models
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - api

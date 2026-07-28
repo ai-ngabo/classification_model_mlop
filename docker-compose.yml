@@ -1,0 +1,40 @@
+# Standard local run: FastAPI API + Streamlit UI.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    image: corn-api:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - RETRAIN_THRESHOLD=50
+    volumes:
+      # Persist uploaded retrain data + newly promoted models across restarts
+      - ./data:/app/data
+      - ./models:/app/models
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request,sys; urllib.request.urlopen('http://localhost:8000/health'); sys.exit(0)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  ui:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ui
+    image: corn-ui:latest
+    ports:
+      - "8501:8501"
+    environment:
+      # UI talks to the API service by its compose service name
+      - API_URL=http://api:8000
+      - DATA_TRAIN_DIR=/app/data/train
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - api
