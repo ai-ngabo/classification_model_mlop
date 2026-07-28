@@ -1,0 +1,31 @@
+# FastAPI service for the Corn Leaf Disease classifier.
+# Built to run both locally (docker-compose) and on GCP cloud
+
+FROM python:3.11-slim
+
+# System deps needed by Pillow / TensorFlow at runtime
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1 libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+# Install Python deps first (better layer caching)
+COPY api/requirements.txt /app/api/requirements.txt
+RUN pip install --upgrade pip && pip install -r /app/api/requirements.txt
+
+# Copy the shared source, the API, and the trained model
+COPY src/ /app/src/
+COPY api/ /app/api/
+COPY models/ /app/models/
+
+# Cloud Run provides $PORT. Locally defaulted to 8000.
+ENV PORT=8000
+EXPOSE 8000
+
+# Use shell form so ${PORT} is expanded at runtime; and works on Cloud Run too
+CMD exec uvicorn api.main:app --host 0.0.0.0 --port ${PORT}
