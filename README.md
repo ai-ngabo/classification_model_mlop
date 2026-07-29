@@ -13,7 +13,7 @@ The model distinguishes four classes of corn leaf condition: **Gray Leaf Spot**,
 | **Live API** | https://corn-api-185814802944.us-central1.run.app |
 | **API interactive docs** | https://corn-api-185814802944.us-central1.run.app/docs |
 | **Live UI (dashboard)** | https://corn-ui-185814802944.us-central1.run.app |
-| **YouTube demo video** | _[]_ |
+| **YouTube demo video** | https://youtu.be/mN8AZVoQm84 |
 | **GitHub repository** | https://github.com/ai-ngabo/classification_model_mlop.git |
 
 > The services scale to zero when idle, so the first request after a period of inactivity may take a few seconds to respond (a cold start while the model loads).
