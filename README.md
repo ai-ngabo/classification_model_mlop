@@ -154,7 +154,7 @@ classification_model_mlop/
 ### 1. Clone and install
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/ai-ngabo/classification_model_mlop.git
 cd classification_model_mlop
 ```
 
